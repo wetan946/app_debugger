@@ -72,7 +72,7 @@ def format_order(row):
         "product_name": row["product_name"],
         "quantity": row["quantity"],
         "completed": row["completed"],
-        "progress": calculate_progress(row["quantity"], row["completed"]),
+        "progress": calculate_progress(row["completed"], row["quantity"]),
         "status": row["status"],
         "created_at": row["created_at"],
         "updated_at": row["updated_at"],
@@ -161,7 +161,7 @@ def update_progress(order_id):
             "UPDATE work_orders SET completed=?, status=?, updated_at=? WHERE id=?",
             (new_completed, new_status, now, order_id)
         )
-
+        conn.commit()
         # 返回更新后的数据
         updated_row = conn.execute(
             "SELECT * FROM work_orders WHERE id = ?", (order_id,)
@@ -200,7 +200,7 @@ def get_summary():
 
         if summary['total_orders'] > 0:
             summary['overall_progress'] = round(
-                summary['total_completed'] / summary['total_orders'] * 100, 1
+                summary['total_completed'] / summary['total_quantity'] * 100, 1
             )
 
         return jsonify({"success": True, "data": summary})
