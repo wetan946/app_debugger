@@ -91,10 +91,9 @@ def get_orders():
     conn = get_db_connection()
     try:
         if status_filter:
-            # rows = conn.execute(
-            #     f"SELECT * FROM work_orders WHERE status = {status_filter}"
-            # ).fetchall()
-            rows = conn.execute("SELECT * FROM work_orders WHERE status = ?", (status_filter,)).fetchall()
+            rows = conn.execute(
+                "SELECT * FROM work_orders WHERE status = ?", (status_filter,)
+            ).fetchall()  # 使用参数化查询
         else:
             rows = conn.execute("SELECT * FROM work_orders").fetchall()
 
@@ -306,8 +305,7 @@ def index():
                 <td>${o.completed}</td>
                 <td>
                     <div class="progress-bar-wrap">
-                        # <div class="progress-bar" style="width: " + o.progress + "%"></div>
-                        <div class="progress-bar" style="width: ${o.progress}%"></div>
+                        <div class="progress-bar" style="width: " + o.progress + "%"></div>
                     </div>
                     <span style="margin-left:6px">${o.progress}%</span>
                 </td>
@@ -326,6 +324,9 @@ def index():
 
         const res = await fetch('/api/orders/' + orderId + '/progress', {
             method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'  // 设置正确的请求头
+            },
             body: JSON.stringify({ completed })
         });
         const json = await res.json();
@@ -339,9 +340,8 @@ def index():
     }
 
     // 初始化加载
-    
-    loadOrders();
     loadSummary();
+    loadOrders();
 </script>
 </body>
 </html>'''
