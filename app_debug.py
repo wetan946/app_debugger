@@ -294,6 +294,7 @@ def index():
     async function loadOrders() {
         const res = await fetch('/api/orders');
         const json = await res.json();
+        
         if (!json.success) return;
         const tbody = document.getElementById('ordersBody');
 
@@ -305,7 +306,7 @@ def index():
                 <td>${o.completed}</td>
                 <td>
                     <div class="progress-bar-wrap">
-                        <div class="progress-bar" style="width: " + o.progress + "%"></div>
+                        <div class="progress-bar" style="width: ${o.progress}%"></div>
                     </div>
                     <span style="margin-left:6px">${o.progress}%</span>
                 </td>
