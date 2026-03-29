@@ -30,23 +30,29 @@
 ```bash
 git clone https://github.com/wetan946/app_debugger.git
 cd app_debugger
+```
 
 ### 2. 创建虚拟环境（推荐）
 
 ```bash
 python -m venv venv
+```
 
 ### 3. 激活虚拟环境
+```bash
 source venv/bin/activate
+```
 
 ### 4. 安装依赖
 ```bash
 pip install flask
+```
 
 ### 5. 启动系统
 
 ```bash
 python app_debug.py
+```
 
 ### 6. 访问应用
 在浏览器中访问http://127.0.0.1:5000/，你将看到车间生产看板页面，可以查看和更新工单进度。
